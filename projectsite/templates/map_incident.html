@@ -31,6 +31,15 @@
       <div class="card card-transparent">
         <div class="card-header">
           <h4 class="card-title text-center">Fire Incidents</h4>
+          <form method="get" class="mb-4 text-center">
+            <label for="city" class="mr-2">Filter by City:</label>
+            <select name="city" id="city" onchange="this.form.submit()" class="form-control d-inline-block w-auto">
+              <option value="">All Cities</option>
+              {% for city in cities %}
+                <option value="{{ city }}" {% if city == selected_city %}selected{% endif %}>{{ city }}</option>
+              {% endfor %}
+            </select>
+          </form>          
           <p class="card-category text-center">
             Looks great on any resolution. Made by our friends from
             <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.
@@ -51,7 +60,7 @@
   var map = L.map('map').setView([9.81644, 118.72239], 13);
 
   var fireIcon = L.icon({
-    iconUrl: "{% static 'img/fire-truck-3.png' %}",
+    iconUrl: "{% static 'img/fire.png' %}",
     iconSize: [40, 40],
     iconAnchor: [20, 40],
     popupAnchor: [0, -35],
