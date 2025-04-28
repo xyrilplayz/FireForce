@@ -3,6 +3,14 @@ from django.views.generic.list import ListView
 from fire.models import Locations, Incident, FireStation
 from django.db.models import Q
 import json
+
+from django.db import connection
+from django.http import JsonResponse
+from django.db.models.functions import ExtractMonth
+
+from django.db.models import Count
+from datetime import datetime
+
 class HomePageView(ListView):
     model = Locations
     context_object_name = 'home'
@@ -17,6 +25,25 @@ class ChartView(ListView):
     
     def get_queryset(self):
         pass
+
+def PieCountbySeverity(request):
+    query = '''
+    SELECT severity_level, COUNT(*) as count
+    FROM fire_incident
+    GROUP BY severity_level
+    '''
+    data = {}
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+    if rows:
+        # Construct the dictionary with severity levels as keys and counts as values
+        data = {severity: count for severity, count in rows}
+    else:
+        data = {}
+
+    return JsonResponse(data)
 
 def map_station(request):
     fireStations = FireStation.objects.values('name', 'latitude', 'longitude')
