@@ -1,6 +1,11 @@
 from django.shortcuts import render
-from django.views.generic.list import ListView
+from django.views.generic.list import ListView 
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from fire.models import Locations, Incident, FireStation
+from fire.forms import FireStationForm
+from django.urls import reverse_lazy
+from django.contrib import messages
+
 from django.db.models import Q
 import json
 
@@ -59,7 +64,7 @@ def LineCountbyMonth(request):
         month = date_time.month
         result[month] += 1
 
-    # If you want to convert month numbers to month names, you can use a dictionary
+    # Convert numbers to month names
     month_names = {
         1: 'Jan',
         2: 'Feb',
@@ -117,8 +122,7 @@ def MultilineIncidentTop3Country(request):
     with connection.cursor() as cursor:
         cursor.execute(query)
         rows = cursor.fetchall()
-    
-    # Initialize a dictionary to store the results
+
     result = {}
 
     # Initialize a set of months from January to December
@@ -137,9 +141,8 @@ def MultilineIncidentTop3Country(request):
         # Update the incident count for the corresponding month
         result[country][month] = total_incidents
 
-    # Ensure there are alwayas 3 countries in the result
+    # Ensure there are always 3 countries in the result
     while len(result) < 3:
-        # Placeholder name for missing countries
         missing_country = f"Country {len(result) + 1}"
         result[missing_country] = {m: 0 for m in months}
 
@@ -229,3 +232,51 @@ def map_incident(request):
         'selected_city': city_filter or ''
     }
     return render(request, 'map_incident.html', context)
+
+class FireStationListView(ListView):
+    model = FireStation
+    context_object_name = 'fire_station'
+    template_name = "fire_station_list.html"
+    paginate_by = 5
+
+class FireStationCreateView(CreateView):
+    model = FireStation
+    form_class = FireStationForm
+    template_name = 'fire_station_add.html'
+    success_url = reverse_lazy('fire-station-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Fire Station added successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Fire Station was not added!')
+        return super().form_invalid(form)
+    
+class FireStationUpdateView(UpdateView):
+    model = FireStation
+    form_class = FireStationForm
+    template_name = 'fire_station_edit.html'
+    success_url = reverse_lazy('fire-station-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Fire Station updated successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Fire Station was not updated!')
+        return super().form_invalid(form)
+class FireStationDeleteView(DeleteView):
+    model = FireStation
+    template_name = 'fire_station_del.html'
+    success_url = reverse_lazy('fire-station-list')
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Fire Station deleted successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Fire Station was not deleted!')
+        return super().form_invalid(form)

@@ -6,7 +6,7 @@
     <title>{% block title %}FireApp{% endblock %}</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{% static 'img/icon.ico' %}" type="image/x-icon" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
     <!-- Fonts and icons -->
     <script src="{% static 'js/plugin/webfont/webfont.min.js' %}"></script>
     <script>
@@ -25,6 +25,15 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{% static 'css/demo.css' %}" />
+    <style>
+      .toast-top-center {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+      }
+    </style>
   </head>
   <body>
     <div class="wrapper">
@@ -140,17 +149,12 @@
                 </a>
                 <div class="collapse" id="base">
                   <ul class="nav nav-collapse">
-                    <li>
-                      <a href="components/avatars.html">
-                        <span class="sub-item">Avatars</span>
+                    <li class="nav-item">
+                      <a href="{% url 'fire-station-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Fire Stations</p>
                       </a>
                     </li>
-                    <li>
-                      <a href="components/buttons.html">
-                        <span class="sub-item">Buttons</span>
-                      </a>
-                    </li>
-                    
                   </ul>
                 </div>
               </li>
@@ -259,9 +263,28 @@
     <script src="{% static 'js/plugin/jqvmap/maps/jquery.vmap.world.js' %}"></script>
     <script src="{% static 'js/plugin/sweetalert/sweetalert.min.js' %}"></script>
     <script src="{% static 'js/atlantis.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     {% block chart %}
-
     {% endblock %}
+
+    <script>
+      const toastDiv = document.getElementById("toast-data");
+      if (toastDiv) {
+        const raw = toastDiv.dataset.messages;
+        if (raw && raw.trim().length > 0) {
+          try {
+            const messages = JSON.parse("[" + raw + "]");
+            messages.forEach(msg => {
+              toastr.options.positionClass = "toast-top-center";
+              toastr[msg.level](msg.text);
+            });
+          } catch (e) {
+            console.error("Toast message parse error:", e);
+          }
+        }
+      }
+    </script>    
+  
   </body>
 </html>
