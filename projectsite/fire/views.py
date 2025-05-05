@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from fire.models import Locations, Incident, FireStation
-from fire.forms import FireStationForm
+from fire.models import Locations, Incident, FireStation, Firefighters
+from fire.forms import FireStationForm, FirefightersForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 
@@ -238,7 +238,7 @@ class FireStationListView(ListView):
     context_object_name = 'fire_station'
     template_name = "fire_station_list.html"
     paginate_by = 5
-
+    ordering = ['name']
 class FireStationCreateView(CreateView):
     model = FireStation
     form_class = FireStationForm
@@ -268,6 +268,7 @@ class FireStationUpdateView(UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, 'Fire Station was not updated!')
         return super().form_invalid(form)
+
 class FireStationDeleteView(DeleteView):
     model = FireStation
     template_name = 'fire_station_del.html'
@@ -279,4 +280,54 @@ class FireStationDeleteView(DeleteView):
     
     def form_invalid(self, form):
         messages.error(self.request, 'Fire Station was not deleted!')
+        return super().form_invalid(form)
+    
+class FirefighterListView(ListView):
+    model = Firefighters
+    context_object_name = 'firefighter'
+    template_name = "firefighter_list.html"
+    paginate_by = 5
+    ordering = ['name']
+class FirefighterCreateView(CreateView):
+    model = Firefighters
+    form_class = FirefightersForm
+    template_name = 'firefighter_add.html'
+    success_url = reverse_lazy('firefighter-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Firefighter added successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Firefighter was not added!')
+        return super().form_invalid(form)
+    
+class FirefighterUpdateView(UpdateView):
+    model = Firefighters
+    form_class = FirefightersForm
+    template_name = 'firefighter_edit.html'
+    success_url = reverse_lazy('firefighter-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Firefighter updated successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Firefighter was not updated!')
+        return super().form_invalid(form)
+
+class FirefighterDeleteView(DeleteView):
+    model = Firefighters
+    template_name = 'firefighter_del.html'
+    success_url = reverse_lazy('firefighter-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Firefighter deleted successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Firefighter was not deleted!')
         return super().form_invalid(form)

@@ -41,8 +41,9 @@ class FireStation(BaseModel):
     address = models.CharField(max_length=150)
     city = models.CharField(max_length=150)  # can be in separate table
     country = models.CharField(max_length=150)  # can be in separate table
-
-
+    def __str__(self):
+            return f"{self.name} - {self.city}, {self.country}"
+            
 class Firefighters(BaseModel):
     XP_CHOICES = (
         ('Probationary Firefighter', 'Probationary Firefighter'),
@@ -54,10 +55,8 @@ class Firefighters(BaseModel):
         ('Battalion Chief', 'Battalion Chief'),)
     name = models.CharField(max_length=150)
     rank = models.CharField(max_length=150)
-    experience_level = models.CharField(max_length=150)
-    station = models.CharField(
-        max_length=45, null=True, blank=True, choices=XP_CHOICES)
-
+    experience_level = models.CharField(max_length=150, null=True, blank=True, choices=XP_CHOICES)
+    station =  models.ForeignKey(FireStation, on_delete=models.CASCADE)
 
 class FireTruck(BaseModel):
     truck_number = models.CharField(max_length=150)
