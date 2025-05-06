@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic.list import ListView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from fire.models import Locations, Incident, FireStation, Firefighters
-from fire.forms import LocationsForm, FireStationForm, FirefightersForm
+from fire.forms import LocationsForm, IncidentForm, FireStationForm, FirefightersForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 
@@ -283,6 +283,57 @@ class LocationDeleteView(DeleteView):
     
     def form_invalid(self, form):
         messages.error(self.request, 'Location was not deleted!')
+        return super().form_invalid(form)
+    
+class IncidentListView(ListView):
+    model = Incident
+    context_object_name = 'incident'
+    template_name = "incident_list.html"
+    paginate_by = 5
+    ordering = ['date_time']
+
+class IncidentCreateView(CreateView):
+    model = Incident
+    form_class = IncidentForm
+    template_name = 'incident_add.html'
+    success_url = reverse_lazy('incident-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Incident added successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Incident was not added!')
+        return super().form_invalid(form)
+    
+class IncidentUpdateView(UpdateView):
+    model = Incident
+    form_class = IncidentForm
+    template_name = 'incident_edit.html'
+    success_url = reverse_lazy('incident-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Incident updated successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Incident was not updated!')
+        return super().form_invalid(form)
+
+class IncidentDeleteView(DeleteView):
+    model = Incident
+    template_name = 'incident_del.html'
+    success_url = reverse_lazy('incident-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Incident deleted successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Incident was not deleted!')
         return super().form_invalid(form)
     
 class FireStationListView(ListView):

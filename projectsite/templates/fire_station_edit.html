@@ -6,7 +6,6 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Edit Fire Station</div>
-                        <div class="card-category">Page Subtitle</div>
                     </div>
                     <div id="toast-data"
                         data-messages='{% for message in messages %}{"level": "{{ message.tags }}", "text": "{{ message|escapejs }}" }{% if not forloop.last %},{% endif %}{% endfor %}'>

@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateInput
+from django.forms import ModelForm, DateTimeInput
 from django import forms
 from .models import Locations, Incident, FireStation, Firefighters, FireTruck, WeatherConditions
 
@@ -10,9 +10,8 @@ class LocationsForm(ModelForm):
 class IncidentForm(ModelForm):
     class Meta:
         model = Incident
-        fields = "__all__"
-        widgets = {
-            'date_time': DateInput(attrs={'type': 'datetime-local'}),
+        fields = "__all__"       widgets = {
+            'date_time': DateTimeInput(attrs={'type': 'datetime-local'}),       
         }
 
 class FireStationForm(ModelForm):

@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Edit Location</div>
+                        <div class="card-title">Add New Incident</div>
                     </div>
                     <div id="toast-data"
                         data-messages='{% for message in messages %}{"level": "{{ message.tags }}", "text": "{{ message|escapejs }}" }{% if not forloop.last %},{% endif %}{% endfor %}'>
@@ -15,8 +15,7 @@
                         <form class="" action="" method="post" novalidate>
                             {% csrf_token %} {% include 'includes/form.html' %}
                             <div class="form-group">
-                                <div class="col-md-12 col-sm-3">
-                                    <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
+                                <div class="col-md-12 col-sm-3">                                    <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
                                 </div>
                             </div>
                         </form>
