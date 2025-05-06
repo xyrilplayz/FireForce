@@ -150,6 +150,18 @@
                 <div class="collapse" id="base">
                   <ul class="nav nav-collapse">
                     <li class="nav-item">
+                      <a href="{% url 'location-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Locations</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'fire-station-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Incidents</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
                       <a href="{% url 'fire-station-list' %}">
                         <i class="la la-table"></i>
                         <p>Fire Stations</p>
@@ -159,6 +171,12 @@
                       <a href="{% url 'firefighter-list' %}">
                         <i class="la la-table"></i>
                         <p>Firefighters</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'fire-station-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Weather</p>
                       </a>
                     </li>
                   </ul>

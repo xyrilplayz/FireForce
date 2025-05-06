@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic.list import ListView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from fire.models import Locations, Incident, FireStation, Firefighters
-from fire.forms import FireStationForm, FirefightersForm
+from fire.forms import LocationsForm, FireStationForm, FirefightersForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 
@@ -233,6 +233,58 @@ def map_incident(request):
     }
     return render(request, 'map_incident.html', context)
 
+
+class LocationListView(ListView):
+    model = Locations
+    context_object_name = 'location'
+    template_name = "location_list.html"
+    paginate_by = 5
+    ordering = ['name']
+
+class LocationCreateView(CreateView):
+    model = Locations
+    form_class = LocationsForm
+    template_name = 'location_add.html'
+    success_url = reverse_lazy('location-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Location added successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Location was not added!')
+        return super().form_invalid(form)
+    
+class LocationUpdateView(UpdateView):
+    model = Locations
+    form_class = LocationsForm
+    template_name = 'location_edit.html'
+    success_url = reverse_lazy('location-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Location updated successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Location was not updated!')
+        return super().form_invalid(form)
+
+class LocationDeleteView(DeleteView):
+    model = Locations
+    template_name = 'location_del.html'
+    success_url = reverse_lazy('location-list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Location deleted successfully!')
+        return response
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Location was not deleted!')
+        return super().form_invalid(form)
+    
 class FireStationListView(ListView):
     model = FireStation
     context_object_name = 'fire_station'
@@ -288,6 +340,7 @@ class FirefighterListView(ListView):
     template_name = "firefighter_list.html"
     paginate_by = 5
     ordering = ['name']
+
 class FirefighterCreateView(CreateView):
     model = Firefighters
     form_class = FirefightersForm
