@@ -114,26 +114,11 @@
               </div>
             </div>
             <ul class="nav nav-primary">
-              <li class="nav-item active">
-                <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+              <li class="nav-item ">
+                <a href="{% url 'dashboard' %}"a>
                   <i class="fas fa-home"></i>
                   <p>Dashboard</p>
-                  <span class="caret"></span>
                 </a>
-                <div class="collapse" id="dashboard">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="#">
-                        <span class="sub-item">Dashboard 1</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="sub-item">Dashboard 2</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
               </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon">
@@ -142,49 +127,11 @@
                 <h4 class="text-section">Components</h4>
               </li>
               <li class="nav-item">
-                <a data-toggle="collapse" href="#base">
-                  <i class="fas fa-layer-group"></i>
-                  <p>Base</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="base">
-                  <ul class="nav nav-collapse">
-                    <li class="nav-item">
-                      <a href="{% url 'location-list' %}">
-                        <i class="la la-table"></i>
-                        <p>Locations</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="{% url 'incident-list' %}">
-                        <i class="la la-table"></i>
-                        <p>Incidents</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="{% url 'fire-station-list' %}">
-                        <i class="la la-table"></i>
-                        <p>Fire Stations</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="{% url 'firefighter-list' %}">
-                        <i class="la la-table"></i>
-                        <p>Firefighters</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="{% url 'weather-list' %}">
-                        <i class="la la-table"></i>
-                        <p>Weather</p>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              
-              
-              
+              <a href="#">
+                <i class="fas fa-layer-group"></i>
+                <p>Base</p>
+              </a>
+            </li>
               <li class="nav-item">
                 <a data-toggle="collapse" href="#maps">
                   <i class="fas fa-map-marker-alt"></i>
@@ -228,12 +175,35 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a href="widgets.html">
-                  <i class="fas fa-desktop"></i>
-                  <p>Widgets</p>
-                  <span class="badge badge-success">4</span>
-                </a>
-              </li>
+              <a href="{% url 'location-list' %}">
+                <i class="fas fa-solid fa-location-arrow"></i>
+                <p>Locations</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'incident-list' %}">
+               <i class="fas fa-solid fa-fire"></i>
+                <p>Incidents</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'fire-station-list' %}">
+                <i class="fas fa-solid fa-fire-extinguisher"></i>
+                <p>Fire Stations</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'firefighter-list' %}">
+                <i class="fas fa-solid fa-truck"></i>
+                <p>Firefighters</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'weather-list' %}">
+                <i class="fas fa-solid fa-cloud"></i>
+                <p>Weather</p>
+              </a>
+            </li>
               
               
             </ul>

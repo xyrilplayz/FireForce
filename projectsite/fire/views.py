@@ -8,13 +8,26 @@ from django.contrib import messages
 
 from django.db.models import Q
 import json
-
+from django.views import View
 from django.db import connection
 from django.http import JsonResponse
 from django.db.models.functions import ExtractMonth
 
 from django.db.models import Count
 from datetime import datetime
+
+class DashboardView(View):
+    def get(self, request):
+        # You can collect data to be used by the dashboard here
+        pie_data = PieCountbySeverity(request).content
+        line_data = LineCountbyMonth(request).content
+        multiline_data = MultilineIncidentTop3Country(request).content
+        
+        return render(request, 'dashboard.html', {
+            'pie_data': pie_data,
+            'line_data': line_data,
+            'multiline_data': multiline_data,
+        })
 
 class HomePageView(ListView):
     model = Locations

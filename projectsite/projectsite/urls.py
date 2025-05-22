@@ -5,15 +5,16 @@ from fire.views import (HomePageView, ChartView, PieCountbySeverity, LineCountby
 LocationListView, LocationCreateView, LocationUpdateView, LocationDeleteView,
 IncidentListView, IncidentCreateView, IncidentUpdateView, IncidentDeleteView,
 FireStationListView, FireStationCreateView, FireStationUpdateView, FireStationDeleteView,
-FirefighterListView, FirefighterCreateView, FirefighterUpdateView, FirefighterDeleteView, WeatherListView, WeatherConditionsCreateView, WeatherConditionsUpdateView, WeatherConditionsDeleteView
+FirefighterListView, FirefighterCreateView, FirefighterUpdateView, FirefighterDeleteView, WeatherListView, WeatherConditionsCreateView, WeatherConditionsUpdateView, WeatherConditionsDeleteView, DashboardView
 )
 
 from fire import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', HomePageView.as_view(), name='home'),
+    path('', DashboardView.as_view(), name='dashboard'),
     path('dashboard_chart', ChartView.as_view(), name='dashboard-chart'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('chart/', views.PieCountbySeverity, name='chart'),
     path('lineChart/', views.LineCountbyMonth, name='chart'),
     path('multilineChart/', views.MultilineIncidentTop3Country, name='chart'),

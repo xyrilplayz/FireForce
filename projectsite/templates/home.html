@@ -1,27 +1,256 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-<div class="page-inner">
-  <div class="page-header">
-    <h4 class="page-title">Dashboard</h4>
-    <ul class="breadcrumbs">
-      <li class="nav-home">
-        <a href="#">
-          <i class="flaticon-home"></i>
-        </a>
-      </li>
-      <li class="separator">
-        <i class="flaticon-right-arrow"></i>
-      </li>
-      <li class="nav-item">
-        <a href="#">Pages</a>
-      </li>
-      <li class="separator">
-        <i class="flaticon-right-arrow"></i>
-      </li>
-      <li class="nav-item">
-        <a href="#">Starter Page</a>
-      </li>
-    </ul>
-  </div>
-  <div class="page-category">Hello World.</div>
-</div>
-{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{% block title %}FireApp{% endblock %}</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="{% static 'img/icon.ico' %}" type="image/x-icon" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+    <!-- Fonts and icons -->
+    <script src="{% static 'js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Lato:300,400,700,900"] },
+        custom: { families: ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ["{% static 'css/fonts.min.css' %}"] },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/atlantis.min.css' %}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}" />
+    <style>
+      .toast-top-center {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="main-header">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="blue">
+          <a href="index.html" class="logo">
+            <img src="{% static 'img/logo.svg' %}" alt="navbar brand" class="navbar-brand" />
+          </a>
+          <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">
+              <i class="icon-menu"></i>
+            </span>
+          </button>
+          <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+          <div class="nav-toggle">
+            <button class="btn btn-toggle toggle-sidebar">
+              <i class="icon-menu"></i>
+            </button>
+          </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+          <div class="container-fluid">
+            <div class="collapse" id="search-nav">
+              
+            </div>
+            <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+              
+              
+              
+              
+            </ul>
+          </div>
+        </nav>
+        <!-- End Navbar -->
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar sidebar-style-2">
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <div class="user">
+              <div class="avatar-sm float-left mr-2">
+                <img src="{% static 'img/profile.jpg' %}" alt="..." class="avatar-img rounded-circle" />
+              </div>
+              <div class="info">
+                <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                  <span>
+                    Hizrian
+                    <span class="user-level">Administrator</span>
+                    <span class="caret"></span>
+                  </span>
+                </a>
+                <div class="clearfix"></div>
+
+                <div class="collapse in" id="collapseExample">
+                  <ul class="nav">
+                    <li>
+                      <a href="#profile">
+                        <span class="link-collapse">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#edit">
+                        <span class="link-collapse">Edit Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#settings">
+                        <span class="link-collapse">Settings</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <ul class="nav nav-primary">
+              <li class="nav-item ">
+                <a href="{% url 'dashboard' %}"a>
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Components</h4>
+              </li>
+              <li class="nav-item">
+                <a data-toggle="collapse" href="#base">
+                  <i class="fas fa-layer-group"></i>
+                  <p>Base</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="base">
+                  <ul class="nav nav-collapse">
+                    <li class="nav-item">
+                      <a href="{% url 'location-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Locations</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'incident-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Incidents</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'fire-station-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Fire Stations</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'firefighter-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Firefighters</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'weather-list' %}">
+                        <i class="la la-table"></i>
+                        <p>Weather</p>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              
+              
+              
+              <li class="nav-item">
+                <a data-toggle="collapse" href="#maps">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Maps</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="maps">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{%  url 'map-station' %}">
+                        <span class="sub-item">Fire Stations</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{%  url 'map-incident' %}">
+                        <span class="sub-item">Fire Incidents</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a data-toggle="collapse" href="#charts">
+                  <i class="far fa-chart-bar"></i>
+                  <p>Charts</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="charts">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{%  url 'dashboard-chart' %}">
+                        <span class="sub-item">Chart Js</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="charts/sparkline.html">
+                        <span class="sub-item">Sparkline</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a href="widgets.html">
+                  <i class="fas fa-desktop"></i>
+                  <p>Widgets</p>
+                  <span class="badge badge-success">4</span>
+                </a>
+              </li>
+              
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="content">
+          {% block content %}
+          {% endblock %}
+     
+          </div>
+        </div>
+        <footer class="footer">
+          <div class="container-fluid">
+            <nav class="pull-left">
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="https://www.themekita.com"> ThemeKita </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> Help </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> Licenses </a>
+                </li>
+              </ul>
+            </nav>
+            <div class="copyright ml-auto">2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://www.themekita.com">ThemeKita</a></div>
+          </div>
+        </footer>
+      </div>
+    </div>
